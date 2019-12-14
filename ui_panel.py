@@ -79,6 +79,13 @@ class UnrealLiveLinkPanel(bpy.types.Panel):
         
         row = layout.row()
         row.template_list("MY_UL_List", "The_List", scene, "unreal_list", scene, "list_index")
+        col = row.column(align=True)
+        col.operator("render.render", icon='ADD', text="")
+        col.operator("render.render", icon='REMOVE', text="")
+        col.separator()
+        col.menu("MATERIAL_MT_context_menu", icon='DOWNARROW_HLT', text="")
+        
+        
 
 
 def register():
