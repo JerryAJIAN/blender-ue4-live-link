@@ -8,13 +8,16 @@ class UELL_OT_track_objects(bpy.types.Operator):
     'the currently selected objects'
 
     def execute(self, context):
+        unreal_list = context.scene.unreal_list
         for object in context.selected_objects:
             if object.type == 'MESH' or object.type == 'CAMERA':
-                print('Unreal Engine Live Link is tracking ' + object.name)
-                unreal_list = context.scene.unreal_list
-                context.scene.unreal_list.add()
-                index = context.scene.list_index
-                context.scene.unreal_list[index].name = object.name
+                if object.name not in unreal_list.keys():
+                    print("adding object " + object.name)
+                    context.scene.unreal_list.add()
+                    index = context.scene.list_index
+                    unreal_list[len(unreal_list) - 1].name = object.name
+                else:
+                    print(object.name + " is already being tracked")
         return {'FINISHED'}
 
 
@@ -69,8 +72,6 @@ class MY_UL_List(bpy.types.UIList):
         # We could write some code to decide which icon to use here...
         custom_icon = 'OBJECT_DATAMODE'
         if item:
-            print("item is something")
-            print("item.name is " + item.name)
             # Make sure your code supports all 3 layout types
             if self.layout_type in {'DEFAULT', 'COMPACT'}: 
                 layout.label(text=item.name, icon = custom_icon) 
