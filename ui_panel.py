@@ -11,6 +11,10 @@ class UELL_OT_track_objects(bpy.types.Operator):
         for object in context.selected_objects:
             if object.type == 'MESH' or object.type == 'CAMERA':
                 print('Unreal Engine Live Link is tracking ' + object.name)
+                unreal_list = context.scene.unreal_list
+                context.scene.unreal_list.add()
+                index = context.scene.list_index
+                context.scene.unreal_list[index].name = object.name
         return {'FINISHED'}
 
 
@@ -19,11 +23,21 @@ class UELL_OT_untrack_objects(bpy.types.Operator):
     bl_label = "Stop tracking selected objects"
     bl_description = 'Unreal Engine Live Link will stop tracking '
     'the currently selected objects'
+    
+    @classmethod
+    def poll(cls, context): 
+        return context.scene.unreal_list
 
     def execute(self, context):
-        for object in context.selected_objects:
-            if object.type == 'MESH' or object.type == 'CAMERA':
-                print('Unreal Engine Live Link is no longer tracking ' + object.name)
+#        for object in context.selected_objects:
+#            if object.type == 'MESH' or object.type == 'CAMERA':
+#                print('Unreal Engine Live Link is no longer tracking ' + object.name)
+        unreal_list = context.scene.unreal_list
+        index = context.scene.list_index
+        
+        unreal_list.remove(index)
+        context.scene.list_index = min(max(0, index - 1), len(unreal_list) - 1)
+        
         return {'FINISHED'}
 
 
@@ -39,12 +53,12 @@ class StreamObject(bpy.types.PropertyGroup):
         
 class ListItem(bpy.types.PropertyGroup): 
     """Group of properties representing an item in the list."""
-    name = bpy.props.StringProperty(
+    name: bpy.props.StringProperty(
         name="Name",
         description="A name for this item",
         default="Untitled")
         
-    random_prop = bpy.props.StringProperty(
+    random_prop: bpy.props.StringProperty(
         name="Any other property you want",
         description="",
         default="")
@@ -54,13 +68,17 @@ class MY_UL_List(bpy.types.UIList):
     def draw_item(self, context, layout, data, item, icon, active_data, active_propname, index):
         # We could write some code to decide which icon to use here...
         custom_icon = 'OBJECT_DATAMODE'
-        # Make sure your code supports all 3 layout types 
-        if self.layout_type in {'DEFAULT', 'COMPACT'}: 
-            layout.label(item.name, icon = custom_icon) 
-        elif self.layout_type in {'GRID'}: 
-            layout.alignment = 'CENTER' 
-            layout.label("", icon = custom_icon)
-
+        if item:
+            print("item is something")
+            print("item.name is " + item.name)
+            # Make sure your code supports all 3 layout types
+            if self.layout_type in {'DEFAULT', 'COMPACT'}: 
+                layout.label(text=item.name, icon = custom_icon) 
+            elif self.layout_type in {'GRID'}: 
+                layout.alignment = 'CENTER' 
+                layout.label(text="", icon = custom_icon)
+        else:
+            print("Item to be added to list is nothing")
 
 class UnrealLiveLinkData(bpy.types.PropertyGroup):
     broadcast_port: bpy.props.IntProperty(
