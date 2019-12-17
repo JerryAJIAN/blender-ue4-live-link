@@ -1,5 +1,32 @@
 import bpy
 
+
+class UELL_OT_track_objects(bpy.types.Operator):
+    bl_idname = "uell.track_objects"
+    bl_label = "Track selected objects"
+    bl_description = 'Unreal Engine Live Link will start tracking '
+    'the currently selected objects'
+
+    def execute(self, context):
+        for object in context.selected_objects:
+            if object.type == 'MESH' or object.type == 'CAMERA':
+                print('Unreal Engine Live Link is tracking ' + object.name)
+        return {'FINISHED'}
+
+
+class UELL_OT_untrack_objects(bpy.types.Operator):
+    bl_idname = "uell.untrack_objects"
+    bl_label = "Stop tracking selected objects"
+    bl_description = 'Unreal Engine Live Link will stop tracking '
+    'the currently selected objects'
+
+    def execute(self, context):
+        for object in context.selected_objects:
+            if object.type == 'MESH' or object.type == 'CAMERA':
+                print('Unreal Engine Live Link is no longer tracking ' + object.name)
+        return {'FINISHED'}
+
+
 class StreamObject(bpy.types.PropertyGroup):
     subject_name: bpy.props.StringProperty(
         name="Subject Name",
@@ -80,8 +107,8 @@ class UnrealLiveLinkPanel(bpy.types.Panel):
         row = layout.row()
         row.template_list("MY_UL_List", "The_List", scene, "unreal_list", scene, "list_index")
         col = row.column(align=True)
-        col.operator("render.render", icon='ADD', text="")
-        col.operator("render.render", icon='REMOVE', text="")
+        col.operator("uell.track_objects", icon='ADD', text="")
+        col.operator("uell.untrack_objects", icon='REMOVE', text="")
         col.separator()
         col.menu("MATERIAL_MT_context_menu", icon='DOWNARROW_HLT', text="")
         
@@ -94,6 +121,8 @@ def register():
     bpy.utils.register_class(UnrealLiveLinkPanel)
     bpy.utils.register_class(ListItem)
     bpy.utils.register_class(MY_UL_List)
+    bpy.utils.register_class(UELL_OT_track_objects)
+    bpy.utils.register_class(UELL_OT_untrack_objects)
     
     
     bpy.types.Scene.list_index = bpy.props.IntProperty(name = "Index for my_list", default = 0)
@@ -103,6 +132,8 @@ def register():
 
 def unregister():
     bpy.utils.unregister_class(UnrealLiveLinkPanel)
+    bpy.utils.unregister_class(UELL_OT_track_objects)
+    bpy.utils.unregister_class(UELL_OT_untrack_objects)
 
 
 if __name__ == "__main__":
