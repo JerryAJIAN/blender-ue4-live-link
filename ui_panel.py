@@ -1,6 +1,7 @@
 import bpy
 import socket
 import threading
+from datetime import datetime
 
 class UELL_OT_start_server(bpy.types.Operator):
     bl_idname = "uell.start_server"
@@ -20,7 +21,7 @@ class UELL_OT_start_server(bpy.types.Operator):
 
         while context.scene.unreal_settings.is_running:
             for tracked_object in context.scene.unreal_list:
-                print("Broadcasting object " + tracked_object.name)
+                print(str(datetime.now(tz=None)) + " - Broadcasting object " + tracked_object.name)
     
     def execute(self, context):
         if context.scene.unreal_settings.is_running:
