@@ -1,5 +1,36 @@
 import bpy
+import socket
+import threading
 
+class UELL_OT_start_server(bpy.types.Operator):
+    bl_idname = "uell.start_server"
+    bl_label = "Start Live Link Server"
+    bl_description = "Start broadcasting UE Live Link data"
+    
+    @classmethod
+    def poll(cls, context):
+        return context.scene.unreal_list
+    
+    @classmethod
+    def startserver(self, context):
+        s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        s.bind((socket.gethostname(),8888))
+        s.listen(1)
+        context.scene.unreal_settings.is_running = True
+
+        while context.scene.unreal_settings.is_running:
+            for tracked_object in context.scene.unreal_list:
+                print("Broadcasting object " + tracked_object.name)
+    
+    def execute(self, context):
+        if context.scene.unreal_settings.is_running:
+            context.scene.unreal_settings.is_running = False
+        else:
+            thread = threading.Thread(target=UELL_OT_start_server.startserver, args=(context,))
+            thread.start()
+            
+        return {'FINISHED'}
+        
 
 class UELL_OT_track_objects(bpy.types.Operator):
     bl_idname = "uell.track_objects"
@@ -118,14 +149,15 @@ class UnrealLiveLinkPanel(bpy.types.Panel):
 
         # Create a simple row.
         row = layout.row()
-        row.alignment = "RIGHT"
-        row.label(text="Online                       ")
-        row.prop(scene.unreal_settings, 'is_running', text="")
+#        row.alignment = "RIGHT"
+#        row.label(text="Online                       ")
+#        row.prop(scene.unreal_settings, 'is_running', text="")
+        row.operator("uell.start_server", text="Toggle UE4 Live Link Server")
         
-        row = layout.row()
-        row.alignment = "RIGHT"
-        row.label(text="Broadcast Port")
-        row.prop(scene.unreal_settings, 'broadcast_port', text="")
+#        row = layout.row()
+#        row.alignment = "RIGHT"
+#        row.label(text="Broadcast Port")
+#        row.prop(scene.unreal_settings, 'broadcast_port', text="")
         
         row = layout.row()
         row.template_list("MY_UL_List", "The_List", scene, "unreal_list", scene, "list_index")
@@ -144,6 +176,7 @@ def register():
     bpy.utils.register_class(MY_UL_List)
     bpy.utils.register_class(UELL_OT_track_objects)
     bpy.utils.register_class(UELL_OT_untrack_objects)
+    bpy.utils.register_class(UELL_OT_start_server)
     
     
     bpy.types.Scene.list_index = bpy.props.IntProperty(name = "Index for my_list", default = 0)
@@ -155,6 +188,7 @@ def unregister():
     bpy.utils.unregister_class(UnrealLiveLinkPanel)
     bpy.utils.unregister_class(UELL_OT_track_objects)
     bpy.utils.unregister_class(UELL_OT_untrack_objects)
+    bpy.utils.unregister_class(UELL_OT_start_server)
 
 
 if __name__ == "__main__":
