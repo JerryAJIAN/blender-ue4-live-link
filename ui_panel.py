@@ -7,6 +7,10 @@ class UELL_OT_track_objects(bpy.types.Operator):
     bl_description = 'Unreal Engine Live Link will start tracking '
     'the currently selected objects'
 
+    @classmethod
+    def poll(cls, context):
+        return not context.scene.unreal_settings.is_running
+
     def execute(self, context):
         unreal_list = context.scene.unreal_list
         for object in context.selected_objects:
@@ -29,7 +33,7 @@ class UELL_OT_untrack_objects(bpy.types.Operator):
     
     @classmethod
     def poll(cls, context): 
-        return context.scene.unreal_list
+        return context.scene.unreal_list and not context.scene.unreal_settings.is_running
 
     def execute(self, context):
 #        for object in context.selected_objects:
