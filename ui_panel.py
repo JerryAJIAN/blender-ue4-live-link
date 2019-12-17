@@ -3,7 +3,7 @@ import socket
 import threading
 from datetime import datetime
 
-class UELL_OT_start_server(bpy.types.Operator):
+class UELL_OT_toggle_server(bpy.types.Operator):
     bl_idname = "uell.start_server"
     bl_label = "Start Live Link Server"
     bl_description = "Start broadcasting UE Live Link data"
@@ -11,6 +11,12 @@ class UELL_OT_start_server(bpy.types.Operator):
     @classmethod
     def poll(cls, context):
         return context.scene.unreal_list
+    
+    def get_armature_index(mesh_object):
+        for index, child_object in enumerate(mesh_object.children):
+            if child_object.type == 'ARMATURE':
+                return index
+        return -1
     
     @classmethod
     def startserver(self, context):
@@ -21,13 +27,20 @@ class UELL_OT_start_server(bpy.types.Operator):
 
         while context.scene.unreal_settings.is_running:
             for tracked_object in context.scene.unreal_list:
-                print(str(datetime.now(tz=None)) + " - Broadcasting object " + tracked_object.name)
+                if bpy.data.objects[tracked_object.name].type == 'MESH':
+                    object = bpy.data.objects[tracked_object.name]
+                    armature_index = self.get_armature_index(object)
+                    armature = object.children[armature_index]
+                    bpy.data.objects[armature.name].data.bones
+                    print(str(datetime.now(tz=None)) + " - Armature index is " + str(armature_index))
+                else:
+                    print(str(datetime.now(tz=None)) + " - Broadcasting object " + tracked_object.name)
     
     def execute(self, context):
         if context.scene.unreal_settings.is_running:
             context.scene.unreal_settings.is_running = False
         else:
-            thread = threading.Thread(target=UELL_OT_start_server.startserver, args=(context,))
+            thread = threading.Thread(target=UELL_OT_toggle_server.startserver, args=(context,))
             thread.start()
             
         return {'FINISHED'}
@@ -43,10 +56,16 @@ class UELL_OT_track_objects(bpy.types.Operator):
     def poll(cls, context):
         return not context.scene.unreal_settings.is_running
 
+    def mesh_has_armature(self, mesh_object):
+        for child_object in mesh_object.children:
+            if child_object.type == 'ARMATURE':
+                return True
+        return False
+
     def execute(self, context):
         unreal_list = context.scene.unreal_list
         for object in context.selected_objects:
-            if object.type == 'MESH' or object.type == 'CAMERA':
+            if (object.type == 'MESH' and self.mesh_has_armature(object)) or object.type == 'CAMERA':
                 if object.name not in unreal_list.keys():
                     print("adding object " + object.name)
                     context.scene.unreal_list.add()
@@ -55,7 +74,6 @@ class UELL_OT_track_objects(bpy.types.Operator):
                 else:
                     print(object.name + " is already being tracked")
         return {'FINISHED'}
-
 
 class UELL_OT_untrack_objects(bpy.types.Operator):
     bl_idname = "uell.untrack_objects"
@@ -177,7 +195,7 @@ def register():
     bpy.utils.register_class(MY_UL_List)
     bpy.utils.register_class(UELL_OT_track_objects)
     bpy.utils.register_class(UELL_OT_untrack_objects)
-    bpy.utils.register_class(UELL_OT_start_server)
+    bpy.utils.register_class(UELL_OT_toggle_server)
     
     
     bpy.types.Scene.list_index = bpy.props.IntProperty(name = "Index for my_list", default = 0)
@@ -189,7 +207,7 @@ def unregister():
     bpy.utils.unregister_class(UnrealLiveLinkPanel)
     bpy.utils.unregister_class(UELL_OT_track_objects)
     bpy.utils.unregister_class(UELL_OT_untrack_objects)
-    bpy.utils.unregister_class(UELL_OT_start_server)
+    bpy.utils.unregister_class(UELL_OT_toggle_server)
 
 
 if __name__ == "__main__":
