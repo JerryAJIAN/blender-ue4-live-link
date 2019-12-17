@@ -127,8 +127,6 @@ class UnrealLiveLinkPanel(bpy.types.Panel):
         col = row.column(align=True)
         col.operator("uell.track_objects", icon='ADD', text="")
         col.operator("uell.untrack_objects", icon='REMOVE', text="")
-        col.separator()
-        col.menu("MATERIAL_MT_context_menu", icon='DOWNARROW_HLT', text="")
         
         
 
