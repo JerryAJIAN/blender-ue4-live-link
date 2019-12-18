@@ -12,10 +12,10 @@ class UELL_OT_toggle_server(bpy.types.Operator):
     def poll(cls, context):
         return context.scene.unreal_list
     
-    def get_armature_index(mesh_object):
+    def get_armature_name(mesh_object):
         for index, child_object in enumerate(mesh_object.children):
             if child_object.type == 'ARMATURE':
-                return index
+                return child_object.name
         return -1
     
     @classmethod
@@ -29,10 +29,14 @@ class UELL_OT_toggle_server(bpy.types.Operator):
             for tracked_object in context.scene.unreal_list:
                 if bpy.data.objects[tracked_object.name].type == 'MESH':
                     object = bpy.data.objects[tracked_object.name]
-                    armature_index = self.get_armature_index(object)
-                    armature = object.children[armature_index]
-                    bpy.data.objects[armature.name].data.bones
-                    print(str(datetime.now(tz=None)) + " - Armature index is " + str(armature_index))
+                    armature_name = self.get_armature_name(object)
+                    armature = bpy.data.objects[armature_name]
+                    for bone in armature.pose.bones:
+                        msg = bone.name
+                        msg += " " + str(bone.location)
+                        msg += " " + str(bone.scale)
+                        msg += " " + str(bone.rotation_quaternion)
+                        print(msg)
                 else:
                     print(str(datetime.now(tz=None)) + " - Broadcasting object " + tracked_object.name)
     
@@ -168,16 +172,10 @@ class UnrealLiveLinkPanel(bpy.types.Panel):
 
         # Create a simple row.
         row = layout.row()
-#        row.alignment = "RIGHT"
-#        row.label(text="Online                       ")
-#        row.prop(scene.unreal_settings, 'is_running', text="")
-        row.operator("uell.start_server", text="Toggle UE4 Live Link Server")
-        
-#        row = layout.row()
-#        row.alignment = "RIGHT"
-#        row.label(text="Broadcast Port")
-#        row.prop(scene.unreal_settings, 'broadcast_port', text="")
-        
+        row.alignment = "RIGHT"
+        row.label(text="Online")
+        row.operator("uell.start_server", text=str(context.scene.unreal_settings.is_running))
+                
         row = layout.row()
         row.template_list("MY_UL_List", "The_List", scene, "unreal_list", scene, "list_index")
         col = row.column(align=True)
