@@ -1,3 +1,3 @@
 #!/bin/bash
-rm UE4LiveLink.zip
+rm UE4LiveLink_*.*.*.zip
 
