@@ -104,4 +104,4 @@ venv.bak/
 .mypy_cache/
 
 # packaged addon
-UE4LiveLink.zip
+UE4LiveLink_*.*.*.zip

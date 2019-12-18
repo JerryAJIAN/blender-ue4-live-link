@@ -41,7 +41,7 @@ class UELL_OT_toggle_server(bpy.types.Operator):
         return context.scene.unreal_list
 
     def get_armature_name(self, mesh_object):
-        if mesh_object.parent.type == 'ARMATURE':
+        if mesh_object.parent and mesh_object.parent.type == 'ARMATURE':
                 return mesh_object.parent.name
         return None
 
@@ -90,7 +90,7 @@ class UELL_OT_track_objects(bpy.types.Operator):
         return not context.scene.unreal_settings.is_running
 
     def mesh_has_armature(self, mesh_object):
-        if mesh_object.parent.type == 'ARMATURE':
+        if mesh_object.parent and mesh_object.parent.type == 'ARMATURE':
             return True
         return False
 
