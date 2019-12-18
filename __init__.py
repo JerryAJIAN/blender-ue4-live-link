@@ -181,7 +181,7 @@ class MY_UL_List(bpy.types.UIList):
 # ======================================
 # Panel
 # ======================================
-class UnrealLiveLinkPanel(bpy.types.Panel):
+class SCENE_PT_UnrealLiveLinkPanel(bpy.types.Panel):
     """Creates a panel in the scene context of the properties editor"""
     bl_label = "Unreal Engine Live Link"
     bl_idname = "SCENE_PT_ue4livelink"
@@ -210,7 +210,7 @@ class UnrealLiveLinkPanel(bpy.types.Panel):
         col.operator("uell.untrack_objects", icon='REMOVE', text="")
 
 
-classes = (UnrealLiveLinkData, UnrealLiveLinkPanel, ListItem, MY_UL_List,
+classes = (UnrealLiveLinkData, SCENE_PT_UnrealLiveLinkPanel, ListItem, MY_UL_List,
            UELL_OT_track_objects, UELL_OT_untrack_objects,
            UELL_OT_toggle_server)
 
