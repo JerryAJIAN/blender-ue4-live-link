@@ -15,32 +15,10 @@ using System.IO;
 
 public abstract class BlenderLiveLinkPluginBase : ModuleRules
 {
-    public BlenderLiveLinkPluginBase(ReadOnlyTargetRules targetRules, string BlenderVersionString) : base(Target)
-    {
-        PrivatePCHHeaderFile = "Private/BlenderLiveLinkPluginPrivatePCH.h";
-
-        bEnforceIWYU = false;
-        bUseRTTI = true;
-
-        PrivateIncludePaths.AddRange(new string[]
-        {
-            Path.Combine(EngineDirectory, "Source/Runtime/Launch/Public"),
-            Path.Combine(EngineDirectory, "Source/Runtime/Launch/Private"),
-            Path.Combine(ModuleDirectory, "StreamObjects/Public")
-        });
-
-        // Unreal dependency modules
-        PrivateDependencyModuleNames.AddRange(new string[]
-        {
-            "Core",
-            "CoreUObject",
-            "ApplicationCore",
-            "Projects",
-            "UdpMessaging",
-            "LiveLinkInterface",
-            "LiveLinkMessageBusFramework"
-        });
-    }
+	public BlenderLiveLinkPluginBase(ReadOnlyTargetRules Target, string MobuVersionString) : base(Target)
+	{
+		PrivatePCHHeaderFile = "Private/BlenderLiveLinkPluginPrivatePCH.h";
+	}
 }
 
 public class BlenderLiveLinkPlugin281 : BlenderLiveLinkPluginBase

@@ -18,26 +18,11 @@ public abstract class BlenderLiveLinkPluginTargetBase : TargetRules
 {
     public BlenderLiveLinkPluginTargetBase(TargetInfo target, string InBlenderVersionString) : base(target)
     {
-        Type =TargetType.Program;
-
-        bShouldCompileAsDLL = true;
-        LinkType = TargetLinkType.Monolithic;
-
-        LaunchModuleName = "BlenderLiveLinkPlugin" + InBlenderVersionString;
-
-        // We only need minimal use of the engine for this plugin
-        bBuildDeveloperTools = false;
-        bUseMallocProfiler = false;
-        bBuildWithEditorOnlyData = true;
-        bCompileAgainstEngine = false;
-        bCompileAgainstCoreUObject = true;
-        bCompileICU = false;
-        bHasExports = false;
     }
 }
 
-public class BlenderLiveLinkPlugin281Target : BlenderLiveLinkPluginTargetBase
+public class BlenderLiveLinkPluginTarget : BlenderLiveLinkPluginTargetBase
 {
-    public BlenderLiveLinkPlugin281Target(TargetInfo Target) : base(Target, "2.81")
+    public BlenderLiveLinkPluginTarget(TargetInfo Target) : base(Target, "2.81")
     { }
 }
