@@ -11,11 +11,14 @@
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 from ctypes import cdll
-lib = cdll.LoadLibrary('../Binaries/Linux/libBlenderLiveLinkPlugin.so')
 
 class Foo(object):
-    define __init__(self):
-        self.obj = lib._Z7Foo_newv()
 
-    define bar(self, x, y, z):
-        return lib._Z7Foo_barP3Fooiii(self.obj, x, y, z)
+    lib = None
+
+    def __init__(self, lib_path):
+        self.lib = cdll.LoadLibrary(lib_path)
+        self.obj = self.lib._Z7Foo_newv()
+
+    def bar(self, x, y, z):
+        return self.lib._Z7Foo_barP3Fooiii(self.obj, x, y, z)
