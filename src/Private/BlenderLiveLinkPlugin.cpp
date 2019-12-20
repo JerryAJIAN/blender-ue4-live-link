@@ -11,6 +11,9 @@
    You should have received a copy of the GNU General Public License
    along with this program. If not, see <http://www.gnu.org/licenses/>.*/
 #include "BlenderLiveLinkPlugin.h"
+#include "RequiredProgramMainCPPInclude.h"
+
+IMPLEMENT_APPLICATION(BlenderLiveLinkPlugin, "BlenderLiveLinkPlugin");
 
 int tom_sum(int x, int y)
 {

@@ -155,6 +155,11 @@ class UnrealLiveLinkData(bpy.types.PropertyGroup):
         description="Is the Live Link server broadcasting?",
         default=False)
 
+    addon_dir: bpy.props.StringProperty(
+        name='Directory of addon',
+        description='Directory where this plugin is installed',
+        default=str(bpy.utils.user_resource('SCRIPTS',"addons"))+'/UELiveLink/')
+
 
 # =====================================
 # Class for List
