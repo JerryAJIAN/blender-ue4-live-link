@@ -1,28 +1,35 @@
-/* This program is free software; you can redistribute it and/or modify
-   it under the terms of the GNU General Public License as published by
-   the Free Software Foundation; either version 3 of the License, or
-   (at your option) any later version.
+// Copyright 1998-2019 Epic Games, Inc. All Rights Reserved.
 
-   This program is distributed in the hope that it will be useful, but
-   WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTIBILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
-   General Public License for more details.
-
-   You should have received a copy of the GNU General Public License
-   along with this program. If not, see <http://www.gnu.org/licenses/>.*/
 using UnrealBuildTool;
 using System.Collections.Generic;
-using System.IO;
 
-public abstract class BlenderLiveLinkPluginTargetBase : TargetRules
+[SupportedPlatforms(UnrealPlatformClass.Desktop)]
+public class BlenderLiveLinkPluginTarget : TargetRules
 {
-    public BlenderLiveLinkPluginTargetBase(TargetInfo target, string InBlenderVersionString) : base(target)
-    {
-    }
-}
+	public BlenderLiveLinkPluginTarget(TargetInfo Target) : base(Target)
+	{
+		Type = TargetType.Program;
+		LinkType = TargetLinkType.Monolithic;
+		LaunchModuleName = "BlenderLiveLinkPlugin";
 
-public class BlenderLiveLinkPluginTarget : BlenderLiveLinkPluginTargetBase
-{
-    public BlenderLiveLinkPluginTarget(TargetInfo Target) : base(Target, "2.81")
-    { }
+		bShouldCompileAsDLL = true;
+
+		// Lean and mean
+		bBuildDeveloperTools = false;
+
+		// Never use malloc profiling in Unreal Header Tool.  We set this because often UHT is compiled right before the engine
+		// automatically by Unreal Build Tool, but if bUseMallocProfiler is defined, UHT can operate incorrectly.
+		bUseMallocProfiler = false;
+
+		// Editor-only data, however, is needed
+		bBuildWithEditorOnlyData = true;
+
+		// Currently this app is not linking against the engine, so we'll compile out references from Core to the rest of the engine
+		bCompileAgainstEngine = false;
+		bCompileAgainstCoreUObject = false;
+		bCompileAgainstApplicationCore = false;
+
+		// UnrealHeaderTool is a console application, not a Windows app (sets entry point to main(), instead of WinMain())
+		bIsBuildingConsoleApplication = true;
+	}
 }
