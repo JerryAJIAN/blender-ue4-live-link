@@ -10,7 +10,9 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
-from ctypes import cdll
+
+from ctypes import cdll, c_double
+
 
 class Foo(object):
 
@@ -18,7 +20,7 @@ class Foo(object):
 
     def __init__(self, lib_path):
         self.lib = cdll.LoadLibrary(lib_path)
-        self.obj = self.lib._Z7Foo_newv()
+        self.lib._Z8DegToRadd.restype = c_double
 
-    def bar(self, x, y, z):
-        return self.lib._Z7Foo_barP3Fooiii(self.obj, x, y, z)
+    def DegToRad(self, degree):
+        return self.lib._Z8DegToRadd(c_double(degree))
