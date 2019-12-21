@@ -9,27 +9,22 @@ public class BlenderLiveLinkPluginTarget : TargetRules
 	public BlenderLiveLinkPluginTarget(TargetInfo Target) : base(Target)
 	{
 		Type = TargetType.Program;
+
+		bShouldCompileAsDLL = false;
 		LinkType = TargetLinkType.Monolithic;
+		SolutionDirectory = "Programs/LiveLink";
 		LaunchModuleName = "BlenderLiveLinkPlugin";
 
-		bShouldCompileAsDLL = true;
 
-		// Lean and mean
+		// We only need minimal use of the engine for this plugin
 		bBuildDeveloperTools = false;
-
-		// Never use malloc profiling in Unreal Header Tool.  We set this because often UHT is compiled right before the engine
-		// automatically by Unreal Build Tool, but if bUseMallocProfiler is defined, UHT can operate incorrectly.
 		bUseMallocProfiler = false;
-
-		// Editor-only data, however, is needed
 		bBuildWithEditorOnlyData = true;
-
-		// Currently this app is not linking against the engine, so we'll compile out references from Core to the rest of the engine
 		bCompileAgainstEngine = false;
-		bCompileAgainstCoreUObject = false;
-		bCompileAgainstApplicationCore = false;
+		bCompileAgainstCoreUObject = true;
+		bCompileICU = false;
+		bHasExports = true;
 
-		// UnrealHeaderTool is a console application, not a Windows app (sets entry point to main(), instead of WinMain())
-		bIsBuildingConsoleApplication = true;
+		bBuildInSolutionByDefault = false;
 	}
 }
