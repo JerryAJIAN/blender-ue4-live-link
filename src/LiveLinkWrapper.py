@@ -14,7 +14,7 @@
 from ctypes import cdll, c_double
 
 
-class Foo(object):
+class LiveLinkWrapper(object):
 
     lib = None
 
