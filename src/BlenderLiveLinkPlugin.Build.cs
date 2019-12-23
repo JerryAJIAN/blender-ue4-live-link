@@ -13,13 +13,18 @@
 */
 
 using UnrealBuildTool;
+using System.IO;
 
 public class BlenderLiveLinkPlugin : ModuleRules
 {
 	public BlenderLiveLinkPlugin(ReadOnlyTargetRules Target) : base(Target)
 	{
 		// For LaunchEngineLoop.cpp include.  You shouldn't need to add anything else to this line.
-		PrivateIncludePaths.AddRange(new string[] { "Runtime/Launch/Public", "Runtime/Launch/Private" });
+		PrivateIncludePaths.AddRange(new string[] { "Runtime/Launch/Public"
+		, "Runtime/Launch/Private"
+		// , Path.Combine(ModuleDirectory, "cplusplus")
+		// , Path.Combine(ModuleDirectory, "cplusplus/StreamObjects") 
+		});
 
 		// Unreal dependency modules
 		PrivateDependencyModuleNames.AddRange(new string[]
