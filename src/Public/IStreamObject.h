@@ -13,12 +13,9 @@
 */
 #pragma once
 
-#include "BlenderLiveLinkCommon.h"
-#include "BlenderObjects/BlenderModel.h"
-
 
 // Pure Abstract class. Inherit from this to support streaming.
-// If you create a new Stream Object then make sure to register it in MobuLiveLinkStreamObject.h
+// If you create a new Stream Object then make sure to register it in BlenderLiveLinkStreamObject.h
 class IStreamObject
 {
 public:
