@@ -1,6 +1,0 @@
-Binaries/libBlenderLiveLinkPlugin.so filter=lfs diff=lfs merge=lfs -text
-Binaries/libBlenderLiveLinkPlugin.sym filter=lfs diff=lfs merge=lfs -text
-Binaries/libBlenderLiveLinkPlugin.debug filter=lfs diff=lfs merge=lfs -text
-Binaries/Linux/libBlenderLiveLinkPlugin.so filter=lfs diff=lfs merge=lfs -text
-Binaries/Linux/libBlenderLiveLinkPlugin.sym filter=lfs diff=lfs merge=lfs -text
-Binaries/Linux/libBlenderLiveLinkPlugin.debug filter=lfs diff=lfs merge=lfs -text
