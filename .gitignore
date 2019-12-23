@@ -107,3 +107,4 @@ venv.bak/
 
 # packaged addon
 UE4LiveLink_*.*.*.zip
+Binaries/**
