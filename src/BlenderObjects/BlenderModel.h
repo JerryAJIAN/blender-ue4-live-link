@@ -16,9 +16,10 @@
 class BlenderModel
 {
 public:
-    BlenderModel(wchar_t* NewLongName);
+    BlenderModel(char* NewLongName);
     int32 Add(int32 x, int32 y);
     int32 Sub(int32 x, int32 y);
-    wchar_t* Name;
-    wchar_t* LongName;
+    char* Name;
+    char* LongName;
+    TArray<BlenderModel*> Children;
 };

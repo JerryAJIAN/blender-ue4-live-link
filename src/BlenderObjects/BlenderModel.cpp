@@ -13,7 +13,7 @@
 */
 #include "BlenderModel.h"
 
-BlenderModel::BlenderModel(wchar_t* NewLongName)
+BlenderModel::BlenderModel(char* NewLongName)
 {
     LongName = NewLongName;
     Name = LongName;
@@ -29,7 +29,7 @@ int32 BlenderModel::Sub(int32 x, int32 y)
 	return x - y;
 }
 
-DLLEXPORT BlenderModel* BlenderModel_Construct(wchar_t* NewLongName)
+DLLEXPORT BlenderModel* BlenderModel_Construct(char* NewLongName)
 {
 	return new BlenderModel(NewLongName);
 }
