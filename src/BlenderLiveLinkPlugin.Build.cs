@@ -24,8 +24,8 @@ public class BlenderLiveLinkPlugin : ModuleRules
 			Path.Combine(EngineDirectory, "Source/Runtime/Launch/Public")
 			, Path.Combine(EngineDirectory, "Source/Runtime/Launch/Private")
 			, Path.Combine(ModuleDirectory, "Private")
-			, Path.Combine(ModuleDirectory, "StreamObjects/Public")
-			, Path.Combine(ModuleDirectory, "BlenderObjects")
+			// , Path.Combine(ModuleDirectory, "StreamObjects/Public")
+			// , Path.Combine(ModuleDirectory, "BlenderObjects")
 		});
 
 		// Unreal dependency modules
