@@ -26,6 +26,9 @@
 class FBlenderLiveLink
 {
 public:
+    FBlenderLiveLink();
+    ~FBlenderLiveLink();
+
     void StartLiveLink();
     void StopLiveLink();
 
@@ -59,8 +62,16 @@ public:
     bool IsEditorCameraStreamed() const;
     void SetEditorCameraStreamed(bool bStream);
 
-    const FString& GetProvidername() const { return CurrentProviderName; }
+    const FString& GetProviderName() const { return CurrentProviderName; }
+    void SetProviderName(const FString& NewValue);
 
+public:
+    // TMap<int32, TSharedPtr<IStreamObject>> StreamObjects;
+	TSharedPtr<ILiveLinkProvider> LiveLinkProvider;
+
+public:
+    void SetInformation(const char* NewInformation);
+    void TickCoreTicker();
 
 private:
     // TWeakPtr<IStreamObject> EditorCameraObject;
@@ -75,7 +86,4 @@ private:
     bool bIsDirty;
 
     double LastEvaluationTime;
-
-    void SetInformation(const char* NewInformation);
-    void TickCoreTicker();
 };
