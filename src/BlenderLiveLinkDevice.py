@@ -11,22 +11,27 @@
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-from ctypes import cdll, c_double
-from BlenderLiveLinkDevice import BlenderLiveLinkDevice
 
+from ctypes import cdll, c_int
 
-class LiveLinkWrapper(object):
+class BlenderLiveLinkDevice(object):
 
     lib = None
-    lib_path = ''
+    blld_ptr = None
 
     def __init__(self, lib_path):
         self.lib = cdll.LoadLibrary(lib_path)
-        self.lib_path = lib_path
-        self.lib._Z8DegToRadd.restype = c_double
+        self.blld_ptr = self.lib.BlenderLiveLink_Construct()
+        self.lib.BlenderLiveLink_GetNextUID.restype = c_int
 
-    def DegToRad(self, degree):
-        return self.lib._Z8DegToRadd(c_double(degree))
+    def Destroy(self):
+        self.lib.BlenderLiveLink_Destroy(self.blld_ptr)
 
-    def BlenderLiveLinkDevice(self):
-        return BlenderLiveLinkDevice(self.lib_path)
+    def Done(self):
+        self.lib.BlenderLiveLink_Done(self.blld_ptr)
+
+    def GetCurrentSampleRateIndex(self):
+        self.lib.BlenderLiveLink_GetCurrentSampleRateIndex(self.blld_ptr)
+
+    def GetNextUID(self):
+        self.lib.BlenderLiveLink_GetNextUID(self.blld_ptr)

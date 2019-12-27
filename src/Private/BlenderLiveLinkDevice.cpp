@@ -26,11 +26,11 @@ FBlenderLiveLink::FBlenderLiveLink()
 {
     // Set sampling rate to Before Render
     CurrentSampleRate = SampleOptions.Last().Value;
-    UpdateSampleRate();
+    // UpdateSampleRate();
 
-    StartLiveLink();
+    // StartLiveLink();
 
-    SetDirty(false);
+    // SetDirty(false);
 
     // TSharedPtr<IStreamObject> EditorCamera = MakeShared<FEditorActiveCameraStreamObject>(LiveLinkProvider);
     // EditorCameraObject = EditorCamera;
@@ -216,5 +216,80 @@ extern "C" // prevent name mangling so it can be referenced from Python
     DLLEXPORT void BlenderLiveLink_SetInformation(FBlenderLiveLink* BlenderLiveLink, const char* NewInformation)
     {
         BlenderLiveLink->SetInformation(NewInformation);
+    }
+
+    DLLEXPORT bool BlenderLiveLink_Init(FBlenderLiveLink* BlenderLiveLink)
+    {
+        return BlenderLiveLink->Init();
+    }
+
+    DLLEXPORT bool BlenderLiveLink_Start(FBlenderLiveLink* BlenderLiveLink)
+    {
+        return BlenderLiveLink->Start();
+    }
+
+    DLLEXPORT bool BlenderLiveLink_Stop(FBlenderLiveLink* BlenderLiveLink)
+    {
+        return BlenderLiveLink->Stop();
+    }
+
+    DLLEXPORT bool BlenderLiveLink_Done(FBlenderLiveLink* BlenderLiveLink)
+    {
+        return BlenderLiveLink->Done();
+    }
+
+    DLLEXPORT bool BlenderLiveLink_Reset(FBlenderLiveLink* BlenderLiveLink)
+    {
+        return BlenderLiveLink->Reset();
+    }
+
+    DLLEXPORT void BlenderLiveLink_UpdateStream(FBlenderLiveLink* BlenderLiveLink)
+    {
+        BlenderLiveLink->UpdateStream();
+    }
+
+    DLLEXPORT int32 BlenderLiveLink_GetCurrentSampleRateIndex(FBlenderLiveLink* BlenderLiveLink)
+    {
+        return BlenderLiveLink->GetCurrentSampleRateIndex();
+    }
+
+    DLLEXPORT void BlenderLiveLink_StartLiveLink(FBlenderLiveLink* BlenderLiveLink)
+    {
+        BlenderLiveLink->StartLiveLink();
+    }
+
+    DLLEXPORT void BlenderLiveLink_StopLiveLink(FBlenderLiveLink* BlenderLiveLink)
+    {
+        BlenderLiveLink->StopLiveLink();
+    }
+
+    DLLEXPORT void BlenderLiveLink_UpdateStreamObjects(FBlenderLiveLink* BlenderLiveLink)
+    {
+        BlenderLiveLink->UpdateStreamObjects();
+    }
+
+    DLLEXPORT void BlenderLiveLink_TickCoreTicker(FBlenderLiveLink* BlenderLiveLink)
+    {
+        BlenderLiveLink->TickCoreTicker();
+    }
+
+    DLLEXPORT int32 BlenderLiveLink_GetNextUID(FBlenderLiveLink* BlenderLiveLink)
+    {
+        return BlenderLiveLink->GetNextUID();
+    }
+
+    DLLEXPORT bool BlenderLiveLink_IsEditorCameraStreamed(FBlenderLiveLink* BlenderLiveLink)
+    {
+        return BlenderLiveLink->IsEditorCameraStreamed();
+    }
+
+    DLLEXPORT void BlenderLiveLink_SetEditorCameraStreamed(FBlenderLiveLink* BlenderLiveLink, bool bStream)
+    {
+        BlenderLiveLink->SetEditorCameraStreamed(bStream);
+    }
+
+    DLLEXPORT void BlenderLiveLink_SetProviderName(FBlenderLiveLink* BlenderLiveLink, const FString& NewValue)
+    {
+        BlenderLiveLink->SetProviderName(NewValue);
     }
 }

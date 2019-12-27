@@ -72,16 +72,14 @@ public:
 public:
     void SetInformation(const char* NewInformation);
     void TickCoreTicker();
+    void UpdateStream(); // Get latest data and send to unreal
+    int32 GetCurrentSampleRateIndex();
 
 private:
     // TWeakPtr<IStreamObject> EditorCameraObject;
     FString CurrentProviderName = "Blender Live Link";
 
     int32 NextUID = 1;
-
-    void UpdateStream(); // Get latest data and send to unreal
-
-    int32 GetCurrentSampleRateIndex();
 
     bool bIsDirty;
 
