@@ -17,11 +17,11 @@ class BlenderLiveLinkLib(object):
     def __init__(self, lib_path):
         self.lib = C.cdll.LoadLibrary(lib_path)
 
-        self.lib.BlenderLiveLinkLib_new.restype = C.c_void_p
-        self.lib.BlenderLiveLinkLib_new.argtypes = []
+        self.lib.BlenderLiveLinkLib_New.restype = C.c_void_p
+        self.lib.BlenderLiveLinkLib_New.argtypes = []
 
-        self.lib.BlenderLiveLinkLib_destroy.restype = None
-        self.lib.BlenderLiveLinkLib_destroy.argtypes = [C.c_void_p]
+        self.lib.BlenderLiveLinkLib_Destroy.restype = None
+        self.lib.BlenderLiveLinkLib_Destroy.argtypes = [C.c_void_p]
 
         self.lib.BlenderLiveLinkLib_Init.restype = C.c_bool
         self.lib.BlenderLiveLinkLib_Init.argtypes = [C.c_void_p]
@@ -38,10 +38,10 @@ class BlenderLiveLinkLib(object):
         self.lib.BlenderLiveLinkLib_Release.restype = C.c_bool
         self.lib.BlenderLiveLinkLib_Release.argtypes = [C.c_void_p]
 
-        self.obj = self.lib.BlenderLiveLinkLib_new()
+        self.obj = self.lib.BlenderLiveLinkLib_New()
 
     def Destroy(self):
-        self.lib.BlenderLiveLinkLib_destroy(self.obj)
+        self.lib.BlenderLiveLinkLib_Destroy(self.obj)
 
     def Init(self):
         return self.lib.BlenderLiveLinkLib_Init(self.obj)
