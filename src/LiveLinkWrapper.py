@@ -13,6 +13,7 @@
 
 from ctypes import cdll, c_double
 from BlenderLiveLinkDevice import BlenderLiveLinkDevice
+from BlenderLiveLinkLib import BlenderLiveLinkLib
 
 
 class LiveLinkWrapper(object):
@@ -23,10 +24,9 @@ class LiveLinkWrapper(object):
     def __init__(self, lib_path):
         self.lib = cdll.LoadLibrary(lib_path)
         self.lib_path = lib_path
-        self.lib._Z8DegToRadd.restype = c_double
-
-    def DegToRad(self, degree):
-        return self.lib._Z8DegToRadd(c_double(degree))
 
     def BlenderLiveLinkDevice(self):
         return BlenderLiveLinkDevice(self.lib_path)
+    
+    def BlenderLiveLinkLib(self):
+        return BlenderLiveLinkLib(self.lib_path)
