@@ -26,6 +26,8 @@
 class FBlenderLiveLink
 {
 public:
+    FBlenderLiveLink();
+    ~FBlenderLiveLink();
     void StartLiveLink();
     void StopLiveLink();
 };

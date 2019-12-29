@@ -14,12 +14,30 @@
 #include "BlenderLiveLinkDevice.h"
 #include <iostream>
 
+FBlenderLiveLink::FBlenderLiveLink()
+{
+    std::cout << "Constructing FBlenderLiveLink" << std::endl;
+};
+
+FBlenderLiveLink::~FBlenderLiveLink()
+{
+    std::cout << "Destroying FBlenderLiveLink" << std::endl;
+};
+
 void FBlenderLiveLink::StartLiveLink()
 {
-    std::cout << "Called StartLiveLink on BlenderLiveLinkDevice" << std::endl;
+    std::cout << "Called StartLiveLink on FBlenderLiveLink" << std::endl;
 };
 
 void FBlenderLiveLink::StopLiveLink()
 {
-    std::cout << "Called StopLiveLink on BlenderLiveLinkDevice" << std::endl;
+    std::cout << "Called StopLiveLink on FBlenderLiveLink" << std::endl;
 };
+
+extern "C"
+{
+    DLLEXPORT FBlenderLiveLink* BlenderLiveLink_New(){ return new FBlenderLiveLink();}
+    DLLEXPORT void BlenderLiveLink_Destroy(FBlenderLiveLink* bll) { bll->~FBlenderLiveLink();}
+    DLLEXPORT void BlenderLiveLink_Start(FBlenderLiveLink* bll){ bll->StartLiveLink();}
+    DLLEXPORT void BlenderLiveLink_Stop(FBlenderLiveLink* bll){ bll->StopLiveLink();}
+}

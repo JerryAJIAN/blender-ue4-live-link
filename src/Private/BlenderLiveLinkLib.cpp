@@ -70,8 +70,8 @@ bool BlenderLiveLinkLib::LibRelease()
 
 extern "C"
 {
-    DLLEXPORT BlenderLiveLinkLib* BlenderLiveLinkLib_new(){ return new BlenderLiveLinkLib();}
-    DLLEXPORT void BlenderLiveLinkLib_destroy(BlenderLiveLinkLib* blll){ blll->~BlenderLiveLinkLib();}
+    DLLEXPORT BlenderLiveLinkLib* BlenderLiveLinkLib_New(){ return new BlenderLiveLinkLib();}
+    DLLEXPORT void BlenderLiveLinkLib_Destroy(BlenderLiveLinkLib* blll){ blll->~BlenderLiveLinkLib();}
     DLLEXPORT bool BlenderLiveLinkLib_Init(BlenderLiveLinkLib* blll){ return blll->LibInit();}
     DLLEXPORT bool BlenderLiveLinkLib_Open(BlenderLiveLinkLib* blll){ return blll->LibOpen();}
     DLLEXPORT bool BlenderLiveLinkLib_Ready(BlenderLiveLinkLib* blll){ return blll->LibReady();}
