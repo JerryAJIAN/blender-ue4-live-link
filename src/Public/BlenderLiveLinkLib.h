@@ -28,8 +28,6 @@
 #include "LiveLinkTypes.h"
 #include "BlenderLiveLinkCommon.h"
 
-DEFINE_LOG_CATEGORY_STATIC(LogBlenderPlugin, Log, All);
-
 IMPLEMENT_APPLICATION(BlenderLiveLinkPlugin, "BlenderLiveLinkPlugin");
 
 class BlenderLiveLinkLib

@@ -21,17 +21,29 @@ FBlenderLiveLink::FBlenderLiveLink()
 
 FBlenderLiveLink::~FBlenderLiveLink()
 {
-    std::cout << "Destroying FBlenderLiveLink" << std::endl;
+    UE_LOG(LogBlenderPlugin, Log, TEXT("Destroying FBlenderLifeLink"));
+    // std::cout << "Destroying FBlenderLiveLink" << std::endl;
 };
 
 void FBlenderLiveLink::StartLiveLink()
 {
-    std::cout << "Called StartLiveLink on FBlenderLiveLink" << std::endl;
+    StopLiveLink();
+
+	LiveLinkProvider = ILiveLinkProvider::CreateLiveLinkProvider(GetProviderName());
+	
+	std::cout << "Live Link Started!" << std::endl;
 };
 
 void FBlenderLiveLink::StopLiveLink()
 {
-    std::cout << "Called StopLiveLink on FBlenderLiveLink" << std::endl;
+    // TickCoreTicker();
+	if (LiveLinkProvider.IsValid())
+	{
+		std::cout << "Provider References: " << LiveLinkProvider.GetSharedReferenceCount() << std::endl;
+		LiveLinkProvider = nullptr;
+		std::cout << "Deleting Live Link" << std::endl;
+	}
+	std::cout << "Live Link Stopped!" << std::endl;
 };
 
 extern "C"

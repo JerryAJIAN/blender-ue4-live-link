@@ -5,6 +5,10 @@ VERSION_MINOR=$(echo $VERSION_LINE | cut -d : -f 2 | tr -d ',' | tr -d ')' | tr 
 VERSION_PATCH=$(echo $VERSION_LINE | cut -d : -f 2 | tr -d ',' | tr -d ')' | tr -d '(' | cut -d " " -f 3)
 
 mkdir UE4LiveLink
+cp -R src/LiveLinkWrapper UE4LiveLink
+cp -R src/Operators UE4LiveLink
+cp -R src/Panels UE4LiveLink
+cp -R src/PropertyGroups UE4LiveLink
 cp -R src/*.py UE4LiveLink
 cp README.md UE4LiveLink/
 cp LICENSE UE4LiveLink/

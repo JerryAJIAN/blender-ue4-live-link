@@ -16,3 +16,6 @@
 #include "CoreMinimal.h"
 #include "LiveLinkProvider.h"
 #include "LiveLinkRefSkeleton.h"
+
+
+DEFINE_LOG_CATEGORY_STATIC(LogBlenderPlugin, Log, All);

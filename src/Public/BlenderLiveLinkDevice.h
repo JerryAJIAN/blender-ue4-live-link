@@ -30,4 +30,10 @@ public:
     ~FBlenderLiveLink();
     void StartLiveLink();
     void StopLiveLink();
+	const FString& GetProviderName() const { return CurrentProviderName; }
+
+    TSharedPtr<ILiveLinkProvider> LiveLinkProvider;
+
+private:
+	FString CurrentProviderName = "Blender Live Link";
 };
