@@ -14,12 +14,12 @@ if "bpy" in locals():
     from UE4LiveLink.LiveLinkWrapper.BlenderLiveLinkLib import BlenderLiveLinkLib
     from UE4LiveLink.LiveLinkWrapper.BlenderLiveLinkDevice import BlenderLiveLinkDevice
     from UE4LiveLink.LiveLinkWrapper.LiveLinkWrapper import LiveLinkWrapper
-    from UE4LiveLink.Operators.ToggleServerOperator import ToggleServerOperator
-    from UE4LiveLink.Operators.TrackObjectsOperator import TrackObjectsOperator
-    from UE4LiveLink.Operators.UntrackObjectsOperator import UntrackObjectsOperator
-    from UE4LiveLink.Panels.MyList import MyList
-    from UE4LiveLink.Panels.UnrealLiveLinkPanel import UnrealLiveLinkPanel
-    from UE4LiveLink.PropertyGroups.ListItemPropertyGroup import ListItemPropertyGroup
+    from UE4LiveLink.Operators.ToggleServerOperator import UELL_OT_toggle_server
+    from UE4LiveLink.Operators.TrackObjectsOperator import UELL_OT_track_objects
+    from UE4LiveLink.Operators.UntrackObjectsOperator import UELL_OT_untrack_objects
+    from UE4LiveLink.Panels.MyList import MY_UL_List
+    from UE4LiveLink.Panels.UnrealLiveLinkPanel import SCENE_PT_UnrealLiveLinkPanel
+    from UE4LiveLink.PropertyGroups.ListItemPropertyGroup import ListItem
     from UE4LiveLink.PropertyGroups.UnrealLiveLinkData import UnrealLiveLinkData
 else:
     import bpy
