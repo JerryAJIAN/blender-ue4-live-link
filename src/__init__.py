@@ -42,11 +42,11 @@ class UELL_OT_toggle_server(bpy.types.Operator):
 
     def get_armature_name(self, mesh_object):
         if mesh_object.parent and mesh_object.parent.type == 'ARMATURE':
-                return mesh_object.parent.name
+            return mesh_object.parent.name
         return None
 
     @classmethod
-    def startserver(self, context):
+    def startserver(cls, context):
         s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         s.bind((socket.gethostname(), 8888))
         s.listen(1)
@@ -56,7 +56,7 @@ class UELL_OT_toggle_server(bpy.types.Operator):
             for tracked_object in context.scene.unreal_list:
                 if bpy.data.objects[tracked_object.name].type == 'MESH':
                     object = bpy.data.objects[tracked_object.name]
-                    armature_name = self.get_armature_name(self, object)
+                    armature_name = cls.get_armature_name(cls, object)
                     armature = bpy.data.objects[armature_name]
                     for bone in armature.pose.bones:
                         msg = bone.name
@@ -158,7 +158,8 @@ class UnrealLiveLinkData(bpy.types.PropertyGroup):
     addon_dir: bpy.props.StringProperty(
         name='Directory of addon',
         description='Directory where this plugin is installed',
-        default=str(bpy.utils.user_resource('SCRIPTS',"addons"))+'/UELiveLink/')
+        default=str(bpy.utils.user_resource('SCRIPTS',
+                    "addons"))+'/UELiveLink/')
 
 
 # =====================================
@@ -213,7 +214,8 @@ class SCENE_PT_UnrealLiveLinkPanel(bpy.types.Panel):
         col.operator("uell.untrack_objects", icon='REMOVE', text="")
 
 
-classes = (UnrealLiveLinkData, SCENE_PT_UnrealLiveLinkPanel, ListItem, MY_UL_List,
+classes = (UnrealLiveLinkData, SCENE_PT_UnrealLiveLinkPanel,
+           ListItem, MY_UL_List,
            UELL_OT_track_objects, UELL_OT_untrack_objects,
            UELL_OT_toggle_server)
 
