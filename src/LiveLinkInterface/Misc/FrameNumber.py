@@ -18,7 +18,7 @@ class FrameNumber(object):
     """Represents a Frame of a scene/animation with an integer"""
     __value: int
 
-    def __init__(self, _in_value):
+    def __init__(self, _in_value: int):
         """A FrameNumber must be constructed with an int"""
         if isinstance(_in_value, int):
             self.__value = _in_value
