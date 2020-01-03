@@ -141,15 +141,14 @@ class FrameNumber(object):
         else:
             raise TypeError()
 
-    # friend FFrameNumber operator-(FFrameNumber A)
     def __neg__(self):
-        return -self.__value
+        return FrameNumber(-self.__value)
 
     def __pos__(self):
-        return +self.__value
+        return FrameNumber(+self.__value)
 
     def __invert__(self):
-        return ~self.__value
+        return FrameNumber(~self.__value)
 
     def __str__(self):
         return str(self.__value)
