@@ -23,7 +23,7 @@ class FrameNumber(object):
         if isinstance(_in_value, int):
             self.__value = _in_value
         else:
-            raise TypeError()
+            self.__value = 0
 
     # friend FFrameNumber operator+(FFrameNumber A, FFrameNumber B)
     def __add__(self, o: object):

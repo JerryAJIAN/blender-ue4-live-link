@@ -159,3 +159,29 @@ class FrameTime(object):
                              (new_sub_frame - math.floor(new_sub_frame)))
         else:
             raise TypeError()
+
+    def __sub__(self, o: object):
+        """
+        Note that the difference between frame -1.5 and 1.5 is 2, not 3,
+        since sub frame positions are always positive
+        """
+        # Ensure SubFrame is always between 0 and 1
+        # Note that the difference between frame -1.5 and 1.5 is 2, not 3,
+        # since sub frame positions are always positive
+        if isinstance(o, FrameTime):
+            new_sub_frame = self.__sub_frame - o.__sub_frame
+            floored_sub_frame = math.floor(new_sub_frame)
+            new_frame_num = (self.frame_number - o.frame_number
+                             + FrameNumber(math.floor(floored_sub_frame)))
+            # FMath::Frac(x) = x - math.floor(x)
+            return FrameTime(new_frame_num,
+                             (new_sub_frame - floored_sub_frame))
+        else:
+            raise TypeError()
+
+    def __neg__(self):
+        # pylint: disable=invalid-unary-operand-type
+        return FrameTime(-self.frame_number
+                         if self.get_sub_frame() == 0.0
+                         else FrameTime(-self.frame_number - 1,
+                                        1.0-self.get_sub_frame()))
