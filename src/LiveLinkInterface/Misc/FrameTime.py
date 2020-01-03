@@ -185,3 +185,18 @@ class FrameTime(object):
                          if self.get_sub_frame() == 0.0
                          else FrameTime(-self.frame_number - 1,
                                         1.0-self.get_sub_frame()))
+
+    def __mul__(self, o: object):
+        if not isinstance(o, float):
+            raise TypeError()
+        return self.from_decimal(self.as_decimal() * object)
+
+    def __truediv__(self, o: object):
+        if not isinstance(o, float):
+            raise TypeError()
+        return self.from_decimal(self.as_decimal() / o)
+
+    def __floordiv__(self, o: object):
+        if not isinstance(o, float):
+            raise TypeError()
+        return self.from_decimal(self.as_decimal() // o)
