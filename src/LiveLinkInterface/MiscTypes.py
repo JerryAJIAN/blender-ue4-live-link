@@ -150,6 +150,20 @@ class FrameNumber(object):
         self.__value = math.floor(_in_value)
 
 
+class FrameTime(object):
+    frame_number: FrameNumber
+    __sub_frame: float
+
+    def __init__(self, _in_frame_number=None, _in_sub_frame=None):
+        if _in_frame_number and isinstance(_in_frame_number, FrameNumber):
+            self.frame_number = _in_frame_number
+        elif _in_frame_number and isinstance(_in_frame_number, int):
+            self.frame_number = FrameNumber(_in_frame_number)
+
+        if _in_sub_frame:
+            self.__sub_frame = _in_sub_frame
+
+
 class FrameRate(object):
     __numerator: int = 60000
     __denominator: int = 1
