@@ -15,9 +15,11 @@ import math
 
 
 class FrameNumber(object):
+    """Represents a Frame of a scene/animation with an integer"""
     __value: int
 
     def __init__(self, _in_value):
+        """A FrameNumber must be constructed with an int"""
         if isinstance(_in_value, int):
             self.__value = _in_value
         else:
@@ -25,6 +27,10 @@ class FrameNumber(object):
 
     # friend FFrameNumber operator+(FFrameNumber A, FFrameNumber B)
     def __add__(self, o: object):
+        """
+        A FrameNumber can be added to an int, float or FrameNumber.
+        A float will be floored before being added
+        """
         if isinstance(o, float) or isinstance(o, int):
             return FrameNumber(self.__value + math.floor(o))
         elif isinstance(o, FrameNumber):
@@ -34,6 +40,11 @@ class FrameNumber(object):
 
     # friend FFrameNumber operator-(FFrameNumber A, FFrameNumber B)
     def __sub__(self, o: object):
+        """
+        A FrameNumber can have an int, float, or FrameNumber
+        subtracted from it. A float will be floored before being
+        subtracted.
+        """
         if isinstance(o, float) or isinstance(o, int):
             return FrameNumber(self.__value - math.floor(o))
         elif isinstance(o, FrameNumber):
@@ -148,44 +159,3 @@ class FrameNumber(object):
 
     def set_value(self, _in_value):
         self.__value = math.floor(_in_value)
-
-
-class FrameTime(object):
-    frame_number: FrameNumber
-    __sub_frame: float
-
-    def __init__(self, _in_frame_number=None, _in_sub_frame=None):
-        if _in_frame_number and isinstance(_in_frame_number, FrameNumber):
-            self.frame_number = _in_frame_number
-        elif _in_frame_number and isinstance(_in_frame_number, int):
-            self.frame_number = FrameNumber(_in_frame_number)
-
-        if _in_sub_frame:
-            self.__sub_frame = _in_sub_frame
-
-
-class FrameRate(object):
-    __numerator: int = 60000
-    __denominator: int = 1
-
-    def __eq__(self, o: object):
-        return (isinstance(o, FrameRate)
-                and self.__numerator == o.__numerator
-                and self.__denominator == o.__denominator)
-
-    def is_valid(self):
-        return self.__denominator > 0
-
-    def as_interval(self):
-        return 0.0
-
-    def as_decimal(self):
-        return 0.0
-
-    def as_seconds(self):
-        return 0.0
-
-
-class QualifiedFrameTime(object):
-    __time = 0.0
-    __rate: FrameRate
