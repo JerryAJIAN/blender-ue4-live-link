@@ -170,3 +170,19 @@ class Timecode(object):
             frames = int(offset_frame % num_frames_in_second)
 
             return Timecode(hours, minutes, seconds, frames, False)
+
+    def is_drop_format_timecode_supported(self, _in_frame_rate: FrameRate):
+        # Drop Format Timecode is only valid for 29.97 and 59.94
+        twenty_nine_nine_seven = FrameRate(30000, 1001)
+        fifty_nine_nine_four = FrameRate(60000, 1001)
+
+        return (_in_frame_rate == twenty_nine_nine_seven or
+                _in_frame_rate == fifty_nine_nine_four)
+
+    def __eq__(self, o: object):
+        return (isinstance(o, Timecode) and self.hours == o.hours
+                and self.minutes == o.minutes and self.seconds == o.seconds
+                and self.frames == o.frames)
+
+    def __ne__(self, o: object):
+        return not (self == o)
