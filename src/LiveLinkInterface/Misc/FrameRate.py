@@ -116,8 +116,8 @@ class FrameRate(object):
                            _source_rate: object,
                            _destination_rate: object):
         if (isinstance(_source_rate, FrameRate)
-           and isinstance(_destination_rate, FrameRate)
-           and _source_rate == _destination_rate):
+            and isinstance(_destination_rate, FrameRate)
+                and _source_rate == _destination_rate):
             return _source_rate
 
         _source_rate = FrameRate(_source_rate.numerator,
@@ -139,9 +139,9 @@ class FrameRate(object):
         # float from the integer part to the float part and then
         # add back any extra integer to integer part
         int_part = ((int(_source_time.get_frame().get_value())
-                    * new_numerator) / new_denominator)
+                     * new_numerator) / new_denominator)
         int_float_part = (((float(_source_time.get_frame().get_value())
-                          * new_numerator) / new_denominator)
+                            * new_numerator) / new_denominator)
                           - float(int_part))
         float_part = ((_source_time.get_sub_frame() * new_numerator)
                       / new_denominator) + int_float_part
@@ -172,4 +172,4 @@ class FrameRate(object):
         """
         Get the reciprocal of this frame rate
         """
-        return FrameRate(self.__denominator, self.__numerator)
+        return FrameRate(self.denominator, self.numerator)
