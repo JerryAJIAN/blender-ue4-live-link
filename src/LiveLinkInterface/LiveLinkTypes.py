@@ -81,11 +81,11 @@ class LiveLinkWorldTime(object):
         return self.time + self.offset
 
 
-class LifeLinkTime(object):
+class LiveLinkTime(object):
     world_time: float
     scene_time: QualifiedFrameTime
 
-    def __init__(self, _in_world_time: float, 
+    def __init__(self, _in_world_time: float,
                  _in_scene_time: QualifiedFrameTime):
         self.scene_time = _in_scene_time
         self.world_time = _in_world_time
