@@ -94,3 +94,12 @@ class LiveLinkTime(object):
 class LiveLinkMetaData(object):
     string_metadata: list
     scene_time: QualifiedFrameTime
+
+
+class LiveLinkBaseFrameData(object):
+    """
+    Base data structure for each frame coming in for asubject
+    """
+    world_time: LiveLinkWorldTime
+    metadata: LiveLinkMetaData
+    property_values: list
