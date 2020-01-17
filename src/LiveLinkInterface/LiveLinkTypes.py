@@ -89,3 +89,8 @@ class LiveLinkTime(object):
                  _in_scene_time: QualifiedFrameTime):
         self.scene_time = _in_scene_time
         self.world_time = _in_world_time
+
+
+class LiveLinkMetaData(object):
+    string_metadata: list
+    scene_time: QualifiedFrameTime
