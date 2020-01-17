@@ -12,6 +12,7 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 import math
+from datetime import timedelta
 from .FrameNumber import FrameNumber
 from .FrameRate import FrameRate
 
@@ -113,8 +114,9 @@ class Timecode(object):
 
             # At an ideal 30fps there would be 18,000 frames every 10 minutes,
             # but at 29.97 there's only 17,982 frames
-            num_true_frames_per_ten_mins = int(math.floor((60 * 10) *
-                                                          _in_frame_rate.as_decimal()))
+            num_true_frames_per_ten_mins = int(math.floor(
+                                                (60 * 10) *
+                                                _in_frame_rate.as_decimal()))
 
             # calculate how many times we've skipped dropping frames
             # (minute 15 gives us 1)
@@ -143,10 +145,12 @@ class Timecode(object):
                     60 * _in_frame_rate.as_decimal())
 
                 # Figure out which minute we are (0-9) to see how many to skip
-                current_minute_of_ten = math.floor(
-                    (frame_in_true_frames - num_timecodes_to_drop) / float(num_true_frames_per_minute))
+                current_minute_of_ten = math.floor((
+                    frame_in_true_frames - num_timecodes_to_drop
+                    ) / float(num_true_frames_per_minute))
                 num_added_frames = int(
-                    total_frames_skipped + (num_timecodes_to_drop * current_minute_of_ten))
+                    total_frames_skipped + (
+                        num_timecodes_to_drop * current_minute_of_ten))
                 offset_frame += num_added_frames
 
             # Convert to negative timecode at the end if the original was
@@ -186,3 +190,25 @@ class Timecode(object):
 
     def __ne__(self, o: object):
         return not (self == o)
+
+    def to_timedelta(self, _in_frame_rate: FrameRate):
+        """
+        Converts this Timecode back into a Python timedelta at the given
+        framerate, taking into account if this is a drop-frame format
+        timecode
+        """
+        converted_frame_number = self.to_frame_number(_in_frame_rate)
+        if self.drop_frame_format:
+            num_of_seconds = (
+                converted_frame_number.get_value * _in_frame_rate.as_interval()
+                )
+        else:
+            float(converted_frame_number.get_value() /
+                  _in_frame_rate.as_decimal())
+
+        return timedelta(seconds=num_of_seconds)
+
+    def from_timedelta(self, _in_timedelta: timedelta,
+                       _in_frame_rate: FrameRate, _in_drop_frame: bool,
+                       _in_rollover: bool):
+        return Timecode()
