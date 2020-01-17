@@ -14,6 +14,7 @@
 # https://github.com/EpicGames/UnrealEngine/blob/release/Engine/Source/Runtime/LiveLinkInterface/Public/LiveLinkTypes.h
 
 from uuid import UUID
+from time import time
 from Misc.FrameRate import FrameRate
 from Misc.QualifiedFrameTime import QualifiedFrameTime
 
@@ -62,3 +63,19 @@ class LiveLinkSubjectKey(object):
 
     def __ne__(self, o: object):
         return not (self == o)
+
+
+class LiveLinkWorldTime(object):
+    time: float
+    offset: float
+
+    def __init__(self, _in_time: float = None, _in_offset: float = 0.0):
+        if _in_time:
+            self.time = _in_time
+        else:
+            self.time = time()
+
+        self.offset = _in_offset
+
+    def get_offsetted_time(self):
+        return self.time + self.offset
