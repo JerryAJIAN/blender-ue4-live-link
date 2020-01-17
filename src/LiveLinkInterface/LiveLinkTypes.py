@@ -124,3 +124,11 @@ class LiveLinkBaseStaticData(object):
                 return _in_frame_data.property_values[found_index]
             except ValueError:
                 return None
+
+
+class LiveLinkSubjectFrameData(object):
+    """
+    Static and dynamic data to be used when fetching a subject complete data
+    """
+    static_data: LiveLinkBaseStaticData
+    frame_data: LiveLinkBaseFrameData
