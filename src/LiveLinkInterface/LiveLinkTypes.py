@@ -13,6 +13,7 @@
 
 # https://github.com/EpicGames/UnrealEngine/blob/release/Engine/Source/Runtime/LiveLinkInterface/Public/LiveLinkTypes.h
 
+from uuid import UUID
 from Misc.FrameRate import FrameRate
 from Misc.QualifiedFrameTime import QualifiedFrameTime
 
@@ -23,6 +24,9 @@ class LiveLinkSubjectName(object):
     """
     name: str
 
+    def __init__(self, _in_name: str):
+        self.name = _in_name
+
     def __eq__(self, o: object):
         return ((isinstance(o, LiveLinkSubjectName) and self.name == o.name)
                 or (isinstance(o, str) and self.name == o))
@@ -32,3 +36,29 @@ class LiveLinkSubjectName(object):
 
     def is_none(self):
         return self.name is None
+
+
+class LiveLinkSubjectKey(object):
+    """
+    The guid for this subject's source
+    """
+    source: UUID
+    subject_name: LiveLinkSubjectName
+
+    def __init__(self, _in_source: UUID,
+                 _in_Subject_name: str,
+                 _in_rhs: object = None):
+        if _in_rhs and isinstance(_in_rhs, LiveLinkSubjectKey):
+            self.source = _in_rhs.source
+            self.subject_name = _in_rhs.subject_name
+        else:
+            self.source = _in_source
+            self.subject_name = LiveLinkSubjectName(_in_Subject_name)
+
+    def __eq__(self, o: object):
+        return (isinstance(o, LiveLinkSubjectKey)
+                and self.source == o.source
+                and self.subject_name == o.subject_name)
+
+    def __ne__(self, o: object):
+        return not (self == o)
