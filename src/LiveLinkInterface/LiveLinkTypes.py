@@ -103,3 +103,24 @@ class LiveLinkBaseFrameData(object):
     world_time: LiveLinkWorldTime
     metadata: LiveLinkMetaData
     property_values: list
+
+
+class LiveLinkBaseStaticData(object):
+    """
+    Base static data structure for a subject
+    Use to store information that is common to every frame
+    """
+    property_names: list
+
+    def find_property_value(self, _in_frame_data: LiveLinkBaseFrameData,
+                            _in_property_name: str):
+        """
+        Returns the value of a property in the frame, None if the property
+        can't be found
+        """
+        if len(self.property_names) == len(_in_frame_data.property_values):
+            try:
+                found_index = self.property_names.index(_in_property_name)
+                return _in_frame_data.property_values[found_index]
+            except ValueError:
+                return None
