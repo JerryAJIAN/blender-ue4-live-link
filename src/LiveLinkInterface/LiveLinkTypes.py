@@ -15,8 +15,8 @@
 
 from uuid import UUID
 from time import time
-from Misc.FrameRate import FrameRate
-from Misc.QualifiedFrameTime import QualifiedFrameTime
+from .Misc.FrameRate import FrameRate
+from .Misc.QualifiedFrameTime import QualifiedFrameTime
 
 
 class LiveLinkSubjectName(object):
@@ -79,3 +79,13 @@ class LiveLinkWorldTime(object):
 
     def get_offsetted_time(self):
         return self.time + self.offset
+
+
+class LifeLinkTime(object):
+    world_time: float
+    scene_time: QualifiedFrameTime
+
+    def __init__(self, _in_world_time: float, 
+                 _in_scene_time: QualifiedFrameTime):
+        self.scene_time = _in_scene_time
+        self.world_time = _in_world_time
