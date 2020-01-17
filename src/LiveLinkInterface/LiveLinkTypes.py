@@ -12,3 +12,23 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 # https://github.com/EpicGames/UnrealEngine/blob/release/Engine/Source/Runtime/LiveLinkInterface/Public/LiveLinkTypes.h
+
+from Misc.FrameRate import FrameRate
+from Misc.QualifiedFrameTime import QualifiedFrameTime
+
+
+class LiveLinkSubjectName(object):
+    """
+    Name of the subject
+    """
+    name: str
+
+    def __eq__(self, o: object):
+        return ((isinstance(o, LiveLinkSubjectName) and self.name == o.name)
+                or (isinstance(o, str) and self.name == o))
+
+    def __str__(self):
+        return str(self.name)
+
+    def is_none(self):
+        return self.name is None
