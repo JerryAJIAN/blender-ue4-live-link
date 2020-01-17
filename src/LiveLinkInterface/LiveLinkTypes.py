@@ -15,7 +15,6 @@
 
 from uuid import UUID
 from time import time
-from .Misc.FrameRate import FrameRate
 from .Misc.QualifiedFrameTime import QualifiedFrameTime
 
 
