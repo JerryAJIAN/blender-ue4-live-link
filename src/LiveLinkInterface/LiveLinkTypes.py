@@ -40,7 +40,7 @@ class LiveLinkSubjectName(object):
 
 class LiveLinkSubjectKey(object):
     """
-    The guid for this subject's source
+    Structure that identifies an individual subject
     """
     source: UUID
     subject_name: LiveLinkSubjectName
